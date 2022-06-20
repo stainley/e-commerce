@@ -1,14 +1,18 @@
 package com.salapp.ecommerce.api.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class ProductResponse {
 
     Long id;
@@ -21,4 +25,7 @@ public class ProductResponse {
     @JsonFormat(pattern = "dd-MM-yy hh:mm:ss")
     Date creationDate;
 
+    BigDecimal price;
+
+    public ProductResponse(){}
 }

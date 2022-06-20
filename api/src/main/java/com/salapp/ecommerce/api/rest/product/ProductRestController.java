@@ -1,7 +1,7 @@
 package com.salapp.ecommerce.api.rest.product;
 
-import com.salapp.ecommerce.api.dto.product.ProductResponse;
 import com.salapp.ecommerce.api.dto.product.ProductRequest;
+import com.salapp.ecommerce.api.dto.product.ProductResponse;
 import io.swagger.v3.oas.annotations.OpenAPI30;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,13 +11,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @OpenAPI30
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1")
 public interface ProductRestController {
 
     @Operation(description = "Create product", summary = "Operation to create a product")
@@ -28,7 +27,7 @@ public interface ProductRestController {
                     content = {@Content(mediaType = "application/json")}
             )
     })
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/product/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest productRequest);
 
     @Operation(summary = "Get product by id")
@@ -39,10 +38,10 @@ public interface ProductRestController {
             @ApiResponse(responseCode = "400", description = "Invalid Product Id", content = @Content)
 
     })
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProductResponse> getProductById(@Parameter(description = "product id to search") @PathVariable Long id);
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/product/{id}")
     ResponseEntity<String> deleteProduct(@PathVariable Long id);
 }

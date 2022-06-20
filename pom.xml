@@ -11,6 +11,7 @@
         <module>api</module>
         <module>api-gateway</module>
         <module>product-service</module>
+        <module>user-service</module>
     </modules>
 
 </project>
