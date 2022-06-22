@@ -35,8 +35,8 @@ jobs:
       # uses: easingthemes/ssh-deploy@c711f2c3391cac2876bf4c833590077f02e4bcb8
       uses: easingthemes/ssh-deploy@v2.2.11
         # Private Key
-      run: ssh -Tv -i /home/runner/.ssh/deploy_key -o StrictHostKeyChecking=no ${{secrets.REMOTE_USER}}@${{secrets.secrets.REMOTE_HOST}}
       with:
+        run: ssh -Tv -i /home/runner/.ssh/deploy_key -o StrictHostKeyChecking=no ${{secrets.REMOTE_USER}}@${{secrets.secrets.REMOTE_HOST}}
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
