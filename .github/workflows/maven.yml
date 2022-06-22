@@ -36,5 +36,5 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.2.11
         # Private Key
       with:
-        run: "echo The SSH is " ${{ secrets.SERVER_SSH_KEY }}
+        run: "echo The SSH is ${{ secrets.SERVER_SSH_KEY }}"
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
