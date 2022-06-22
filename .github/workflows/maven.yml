@@ -35,10 +35,5 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.2.11
       env:
         name: production
-      with:
-        # Private Key
-        SSH_PRIVATE_KEY: "${{ secrets.SERVER_SSH_KEY }}"
-        # Remote host
-        REMOTE_HOST:  "${{ secrets.REMOTE_HOST }}"
-        # Remote user
-        REMOTE_USER: "${{ secrets.REMOTE_USER }}"                 
+      # Private Key
+      run: "echo The SSH is ${{ secrets.SERVER_SSH_KEY }}"
