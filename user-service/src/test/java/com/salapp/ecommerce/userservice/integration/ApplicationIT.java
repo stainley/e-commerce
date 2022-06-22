@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataM
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ import java.util.Objects;
 @Testcontainers
 @EnableAutoConfiguration(exclude = {EmbeddedMongoAutoConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@ComponentScan(basePackages = {"com.salapp"})
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 public class ApplicationIT {
 
