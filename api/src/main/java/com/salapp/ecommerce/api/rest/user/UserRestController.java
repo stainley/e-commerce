@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @OpenAPI30
 @RequestMapping("/api/v1")
@@ -28,4 +29,7 @@ public interface UserRestController {
 
     @GetMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> getUserByEmail(@RequestParam String email);
+
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<UserResponse>> getAllUsers();
 }
