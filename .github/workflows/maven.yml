@@ -29,13 +29,10 @@ jobs:
         host='minexsoft.com'
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-    - name: Deploy to Prod
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-        ARGS: "-rltgoDzvO"
-        SOURCE: "dist/"
-        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-        REMOTE_USER: ${{ secrets.REMOTE_USER }}
-        TARGET: ${{ secrets.REMOTE_TARGET }}
-        EXCLUDE: "/dist/, /node_modules/"
+  deployment:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: minexsoft.com
+    steps:
+      - name: deploy
