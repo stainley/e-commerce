@@ -10,8 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -24,8 +27,7 @@ public class UserService implements IUserService {
     private final MongoTemplate mongoTemplate;
 
     @Override
-    public void createUser(UserRequest userRequest) {
-
+    public UserResponse createUser(UserRequest userRequest) {
 
         UserEntityMapper userEntityMapper = (request) -> {
             UserEntity userEntity = new UserEntity();
@@ -38,7 +40,12 @@ public class UserService implements IUserService {
             return userEntity;
         };
 
-        this.userRepository.insert(userEntityMapper.mapUserRequestToUserEntity(userRequest));
+        UserEntity insert = this.userRepository.insert(userEntityMapper.mapUserRequestToUserEntity(userRequest));
+
+        return UserResponse.builder()
+                .id(insert.getId())
+                .username(userRequest.getUsername())
+                .build();
     }
 
     @Override
@@ -51,11 +58,18 @@ public class UserService implements IUserService {
     @Override
     public UserResponse getUserByEmail(String email) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("email").is(email));
+            query.addCriteria(Criteria.where("email").is(email));
 
         Optional<UserEntity> userEntity = this.mongoTemplate.find(query, UserEntity.class).stream().findFirst();
 
         return mapUser.apply(userEntity.orElse(null));
+    }
+
+    @Override
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        List<UserEntity> users = this.userRepository.findAll();
+
+        return new ResponseEntity<>(UserResponseMapper.mapUserEntityToUserResponse(users), HttpStatus.OK);
     }
 
     private final UserResponseMapper userResponseMapper = (entity) ->

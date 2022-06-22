@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class UserController implements UserRestController {
@@ -18,8 +20,8 @@ public class UserController implements UserRestController {
 
     @Override
     public ResponseEntity<UserResponse> createUser(UserRequest userRequest) {
-        this.userService.createUser(userRequest);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        UserResponse response = this.userService.createUser(userRequest);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @Override
@@ -31,6 +33,11 @@ public class UserController implements UserRestController {
     @Override
     public ResponseEntity<UserResponse> getUserByEmail(String email) {
         UserResponse result = this.userService.getUserByEmail(email);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.FOUND);
+    }
+
+    @Override
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        return this.userService.getUsers();
     }
 }
