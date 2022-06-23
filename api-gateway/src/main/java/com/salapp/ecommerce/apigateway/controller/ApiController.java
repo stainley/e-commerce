@@ -61,7 +61,7 @@ public class ApiController implements EcommerceApi {
 
     @Override
     public ResponseEntity<UserResponse> getUserByEmail(String email) {
-        ResponseEntity<UserResponse> response = this.restTemplate.getForEntity(URL_USER + "/api/v1/user?" + email, UserResponse.class);
+        ResponseEntity<UserResponse> response = this.restTemplate.getForEntity(URL_USER + "/api/v1/user" + email, UserResponse.class);
         return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
     }
 

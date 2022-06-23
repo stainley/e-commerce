@@ -8,8 +8,6 @@ import com.salapp.ecommerce.productservice.mapper.ProductResponseMapper;
 import com.salapp.ecommerce.productservice.repository.IProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -26,7 +24,6 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse createProduct(ProductRequest productRequest) {
         ProductEntity product = productEntityMapper.mapProductRequestToProductEntity(productRequest);
-        product.setCreationDate(new Date());
 
         ProductEntity productCreated = this.productRepository.save(product);
         log.info("Product created: {}", productCreated);
@@ -50,8 +47,10 @@ public class ProductService implements IProductService {
 
     private final ProductEntityMapper productEntityMapper = (request) -> {
         ProductEntity product = new ProductEntity();
+
         product.setName(request.getName());
         product.setDescription(request.getDescription());
+        product.setCreationDate(new Date());
         product.setPrice(request.getPrice());
         return product;
     };

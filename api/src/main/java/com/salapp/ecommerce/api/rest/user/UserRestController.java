@@ -28,7 +28,7 @@ public interface UserRestController {
     ResponseEntity<UserResponse> getUserById(@PathVariable String id);
 
     @GetMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<UserResponse> getUserByEmail(@RequestParam String email);
+    ResponseEntity<UserResponse> getUserByEmail(@RequestBody String email);
 
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<UserResponse>> getAllUsers();

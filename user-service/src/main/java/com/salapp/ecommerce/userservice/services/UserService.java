@@ -45,6 +45,10 @@ public class UserService implements IUserService {
         return UserResponse.builder()
                 .id(insert.getId())
                 .username(userRequest.getUsername())
+                .firstName(userRequest.getFirstName())
+                .lastName(userRequest.getLastName())
+                .email(userRequest.getEmail())
+                .gender(userRequest.getGender())
                 .build();
     }
 
@@ -58,11 +62,11 @@ public class UserService implements IUserService {
     @Override
     public UserResponse getUserByEmail(String email) {
         Query query = new Query();
-            query.addCriteria(Criteria.where("email").is(email));
+        query.addCriteria(Criteria.where("email").is(email));
 
         Optional<UserEntity> userEntity = this.mongoTemplate.find(query, UserEntity.class).stream().findFirst();
 
-        return mapUser.apply(userEntity.orElse(null));
+        return mapUser.apply(userEntity.orElseThrow());
     }
 
     @Override
