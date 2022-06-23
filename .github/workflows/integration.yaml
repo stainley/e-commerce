@@ -1,0 +1,13 @@
+name: Continue Integration QA
+
+on:
+  push:
+    branches: ["development"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Integration Test
+

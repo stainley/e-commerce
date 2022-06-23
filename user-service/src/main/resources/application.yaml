@@ -10,6 +10,20 @@ spring:
 spring:
   config:
     activate:
+      on-profile: prod
+  data:
+    mongodb:
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
+      database: user_db
+      port: 27017
+      host: dbuser
+      auto-index-creation: true
+---
+spring:
+  config:
+    activate:
       on-profile: dev
   data:
     mongodb:
@@ -20,20 +34,4 @@ spring:
       host: localhost
       auto-index-creation: true
       password: rootpass
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  data:
-    mongodb:
-      authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: user_db
-      port: 27017
-      host: user_mongodb
-      auto-index-creation: true
-
 
