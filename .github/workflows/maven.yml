@@ -42,5 +42,8 @@ jobs:
           cd eccomerce          
           git clone git@github.com:stainley/e-commerce.git 
           cd e-commerce
+          cd product-service/
+          cp -r mvnw .mvn/ ../
+          cd ..
           ./mvnw clean package -Pdev
           docker-compose up -d
