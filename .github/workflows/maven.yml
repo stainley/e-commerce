@@ -23,13 +23,13 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -Pdev -B package --file pom.xml
-    - name: Write SSH keys
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo MOSTRANDO "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        host='minexsoft.com'
-        hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-        ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+    #- name: Write SSH keys
+      #run: |
+        #install -m 600 -D /dev/null ~/.ssh/id_rsa
+        #echo MOSTRANDO "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        #host='minexsoft.com'
+        #hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+        #ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: ssh deploy
       # You may pin to the exact commit or the version.
       # uses: easingthemes/ssh-deploy@c711f2c3391cac2876bf4c833590077f02e4bcb8
@@ -37,7 +37,8 @@ jobs:
       uses: appleboy/ssh-action@master
         # Private Key
       with:
-        run: ssh -Tv -i /home/runner/.ssh/deploy_key -o StrictHostKeyChecking=no saiyamans@minexsoft.com
+        #run: ssh -Tv -i /home/runner/.ssh/deploy_key -o StrictHostKeyChecking=no saiyamans@minexsoft.com
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        script: whoami
