@@ -74,6 +74,7 @@ public class UserService implements IUserService {
 
     private final UserResponseMapper userResponseMapper = (entity) ->
             UserResponse.builder()
+                    .id(entity.getId())
                     .username(entity.getUserName())
                     .firstName(entity.getFirstName())
                     .lastName(entity.getLastName())

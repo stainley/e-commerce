@@ -5,7 +5,7 @@ services:
   api_gateway:
     container_name: api_gateway
     environment:
-      - SPRINGBOOT_PROFILES_ACTIVE=prod
+      - SPRING_PROFILES_ACTIVE=prod
     build:
       context: api-gateway/
       dockerfile: Dockerfile
@@ -96,6 +96,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
   dbuser:
+    container_name: user_db
     image: mongo
     ports:
       - '27017:27017'

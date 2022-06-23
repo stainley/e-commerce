@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: @profileActivation@
+  application:
+    name: Api Gateway
+server:
+  port: 8080
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    web: off
+    sql: off
+    com.salapp.ecommerce:
+      apigateway: info
+      api: error
+    org.springframework: off
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
