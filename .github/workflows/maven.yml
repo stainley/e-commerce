@@ -42,6 +42,7 @@ jobs:
           cd eccomerce          
           git clone git@github.com:stainley/e-commerce.git 
           cd e-commerce
+          git pull origin development
           cd product-service/
           cp -r mvnw .mvn/ ../
           cd ..
