@@ -4,6 +4,8 @@ services:
   ## API GATEWAY
   api_gateway:
     container_name: api_gateway
+    environment:
+      - SPRINGBOOT_PROFILES_ACTIVE=prod
     build:
       context: api-gateway/
       dockerfile: Dockerfile
