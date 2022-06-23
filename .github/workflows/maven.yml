@@ -26,7 +26,7 @@ jobs:
     - name: Write SSH keys
       run: |
         install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        echo MOSTRANDO "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         host='minexsoft.com'
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
