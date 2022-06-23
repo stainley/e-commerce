@@ -43,7 +43,7 @@ services:
     ports:
       - '8090:8090'
     environment:
-      - SPRINGBOOT_PROFILES_ACTIVE=prod
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - dbuser
     networks:
