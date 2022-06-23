@@ -46,4 +46,7 @@ jobs:
         HOST: ${{ secrets.REMOTE_HOST }}
         #REMOTE_USER: ${{ secrets.REMOTE_USER }}
         username: ${{ secrets.REMOTE_USER }}
-        script: whoami
+        script: |
+          echo "Executing: " ifconfig
+          pwd
+          ls -ltr
