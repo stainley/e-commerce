@@ -4,6 +4,7 @@ import com.salapp.ecommerce.api.dto.product.ProductRequest;
 import com.salapp.ecommerce.api.dto.product.ProductResponse;
 import com.salapp.ecommerce.api.dto.user.UserRequest;
 import com.salapp.ecommerce.api.dto.user.UserResponse;
+import com.salapp.ecommerce.api.exception.ProductNotFoundException;
 import com.salapp.ecommerce.api.rest.composite.EcommerceApi;
 import com.salapp.ecommerce.api.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -37,8 +40,15 @@ public class ApiController implements EcommerceApi {
     }
 
     @Override
-    public ResponseEntity<ProductResponse> getProductById(Long id) {
+    public ResponseEntity<ProductResponse> getProductById(Long id) throws ProductNotFoundException {
         return this.restTemplate.getForEntity(URL_PRODUCT + "/api/v1/product/" + id, ProductResponse.class);
+    }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> getProductsToExpire(LocalDateTime expirationDate) {
+        ResponseEntity<ProductResponse> forEntity = this.restTemplate.getForEntity(URL_PRODUCT + "/api/v1/product" + expirationDate, ProductResponse.class);
+
+        return new ResponseEntity<>(List.of(Objects.requireNonNull(forEntity.getBody())), forEntity.getStatusCode());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.salapp.ecommerce.api.rest.product;
 
 import com.salapp.ecommerce.api.dto.product.ProductRequest;
 import com.salapp.ecommerce.api.dto.product.ProductResponse;
+import com.salapp.ecommerce.api.exception.ProductNotFoundException;
 import io.swagger.v3.oas.annotations.OpenAPI30;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @OpenAPI30
 @RequestMapping("/api/v1")
@@ -39,7 +42,10 @@ public interface ProductRestController {
 
     })
     @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<ProductResponse> getProductById(@Parameter(description = "product id to search") @PathVariable Long id);
+    ResponseEntity<ProductResponse> getProductById(@Parameter(description = "product id to search") @PathVariable Long id) throws ProductNotFoundException;
+
+    @GetMapping("/product")
+    ResponseEntity<List<ProductResponse>> getProductsToExpire(@RequestParam("expiration") LocalDateTime expirationDate);
 
 
     @DeleteMapping("/product/{id}")

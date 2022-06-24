@@ -3,6 +3,8 @@ spring:
     active: @profileActivation@
   application:
     name: Api Gateway
+  main:
+    banner-mode: off
 server:
   port: 8080
 ---
@@ -12,12 +14,14 @@ spring:
       on-profile: prod
 logging:
   level:
-    web: off
+
     sql: off
     com.salapp.ecommerce:
       apigateway: info
-      api: error
-    org.springframework: off
+      api: info
+    org.springframework:
+      web:  error
+    root: error
 ---
 spring:
   config:

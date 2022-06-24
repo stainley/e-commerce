@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -29,5 +30,9 @@ public class ProductEntity {
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     Date creationDate;
+
+    @Column(name = "EXPIRATION_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    LocalDateTime expirationDate;
 
 }
