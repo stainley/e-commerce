@@ -41,5 +41,4 @@ logging:
     sql: info
     com.salapp.ecommerce:
       api: error
-      productservice: info, error
     root: error
