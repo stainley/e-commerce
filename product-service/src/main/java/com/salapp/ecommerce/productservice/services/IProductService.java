@@ -6,6 +6,7 @@ import com.salapp.ecommerce.api.exception.ProductNotFoundException;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +18,5 @@ public interface IProductService {
 
     void deleteProduct(Long id);
 
-    List<ProductResponse> getProductToExpire(LocalDateTime expiration);
+    List<ProductResponse> getProductToExpire(Date expiration);
 }

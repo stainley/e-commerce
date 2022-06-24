@@ -33,3 +33,13 @@ spring:
     database: postgresql
     hibernate:
       ddl-auto: create
+  main:
+    banner-mode: off
+logging:
+  level:
+    web: error
+    sql: info
+    com.salapp.ecommerce:
+      api: error
+      productservice: info, error
+    root: error

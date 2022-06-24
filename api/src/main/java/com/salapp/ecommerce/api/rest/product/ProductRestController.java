@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @OpenAPI30
@@ -45,7 +46,7 @@ public interface ProductRestController {
     ResponseEntity<ProductResponse> getProductById(@Parameter(description = "product id to search") @PathVariable Long id) throws ProductNotFoundException;
 
     @GetMapping("/product")
-    ResponseEntity<List<ProductResponse>> getProductsToExpire(@RequestParam("expiration") LocalDateTime expirationDate);
+    ResponseEntity<List<ProductResponse>> getProductsToExpire(@RequestParam("expiration") Date expirationDate);
 
 
     @DeleteMapping("/product/{id}")

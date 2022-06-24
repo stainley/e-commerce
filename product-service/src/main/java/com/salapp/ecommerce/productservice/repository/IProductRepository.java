@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -19,7 +20,7 @@ public interface IProductRepository extends CrudRepository<ProductEntity, Long> 
         SELECT p.* FROM product.public.product p
         WHERE p.expiration_date = :expire
     """, nativeQuery = true)
-    List<ProductEntity> getProductsToExpire(@Param("expire") LocalDateTime expire);
+    List<ProductEntity> getProductsToExpire(@Param("expire") Date expire);
 
 
 }
