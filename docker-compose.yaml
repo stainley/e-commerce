@@ -14,11 +14,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.50
           memory: 200m
     ports:
       - '8080:8080'
-    depends_on:
+    depends_on:y
       - product
       - user
     networks:
@@ -31,14 +30,12 @@ services:
       context: user-service/
       dockerfile: Dockerfile
       args:
-        buildo: 1
+        build: 1
     deploy:
       resources:
         limits:
-          cpus: '0.50'
           memory: 250m
         reservations:
-          cpus: '0.25'
           memory: 200m
     ports:
       - '8090:8090'
@@ -63,7 +60,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.50
           memory: 200m
     depends_on:
       - product_postgres
@@ -82,7 +78,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.50
           memory: 100m
     ports:
       - '5432:5432'
@@ -119,6 +114,20 @@ services:
   #    - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
   #    - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
   #    - ME_CONFIG_MONGODB_SERVER=mongodb
+  keycloak:
+    image: quay.io/keycloak/keycloak:18.0.0-legacy
+    environment:
+      - KEYCLOAK_USER=keycloak
+      - KEYCLOAK_PASSWORD=keycloak
+      - DB_VENDOR=h2
+      - JAVA_OPTS=-Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singlefile -Dkeycloak.migration.file=/temp/keycloak-dump.json
+    volumes:
+      - type: bind
+        source: ./tmp/keycloak-dump.json
+        target: /temp/keycloak-dump.json
+        read_only: true
+    ports:
+      - "8888:8080"
 
 volumes:
   data: { }

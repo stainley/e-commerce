@@ -9,12 +9,12 @@ import com.salapp.ecommerce.api.rest.composite.EcommerceApi;
 import com.salapp.ecommerce.api.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +28,8 @@ public class ApiController implements EcommerceApi {
 
     private final RestTemplate restTemplate;
 
-    private final static String URL_PRODUCT = "http://product:8070";
+    @Value("${product.service}")
+    private String URL_PRODUCT;
 
     private final static String URL_USER = "http://user:8090";
 
@@ -42,7 +43,17 @@ public class ApiController implements EcommerceApi {
 
     @Override
     public ResponseEntity<ProductResponse> getProductById(Long id) throws ProductNotFoundException {
-        return this.restTemplate.getForEntity(URL_PRODUCT + "/api/v1/product/" + id, ProductResponse.class);
+
+        ResponseEntity<ProductResponse> entityResponse = this.restTemplate.getForEntity(URL_PRODUCT + "/api/v1/product/" + id, ProductResponse.class);
+
+        if (entityResponse != null) {
+            if(entityResponse.getBody().getId() != null) {
+                return entityResponse;
+            }
+        } else {
+            throw new ProductNotFoundException("Couldn't find product with Id: [ " + id + " ]");
+        }
+        return null;
     }
 
     @Override

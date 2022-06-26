@@ -37,10 +37,12 @@ public class ProductService implements IProductService {
     public Optional<ProductResponse> getProductById(Long id) throws ProductNotFoundException {
         log.info("Product with ID: {}", id);
         Optional<ProductEntity> result = this.productRepository.findById(id);
-        if (result.isEmpty()) {
-            throw new ProductNotFoundException("Product Id: " + id + " not Found");
+
+        if(result.isEmpty()) {
+            throw new ProductNotFoundException("Couldn't find a product with Id: [" + id + "]");
+        } else {
+            return result.map(productResponseMapper::mapProductEntityToProductResponse);
         }
-        return result.map(productResponseMapper::mapProductEntityToProductResponse);
     }
 
     @Override

@@ -14,16 +14,13 @@ spring:
       on-profile: prod
 logging:
   level:
-
     sql: off
-    com.salapp.ecommerce:
-      apigateway: info
-      api: info
-    org.springframework:
-      web:  error
-    root: error
+product:
+  service: http://product:8070
 ---
 spring:
   config:
     activate:
       on-profile: dev
+product:
+  service: http://localhost:8070

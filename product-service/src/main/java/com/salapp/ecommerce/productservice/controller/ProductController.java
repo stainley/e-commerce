@@ -37,14 +37,10 @@ public class ProductController implements ProductRestController {
     @Override
     public ResponseEntity<ProductResponse> getProductById(Long id) throws ProductNotFoundException {
         log.info("Trying to find a product with id: {}", id);
-        try {
-            Optional<ProductResponse> result = this.productService.getProductById(id);
 
-            return result.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.FOUND))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        } catch (Exception e) {
-            throw new ProductNotFoundException();
-        }
+        Optional<ProductResponse> result = this.productService.getProductById(id);
+
+        return result.map(productResponse -> ResponseEntity.status(HttpStatus.OK).body(productResponse)).orElseThrow();
     }
 
     @Override

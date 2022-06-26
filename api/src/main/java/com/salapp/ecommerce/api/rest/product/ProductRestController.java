@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,12 +33,14 @@ public interface ProductRestController {
     @PostMapping(value = "/product/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest productRequest);
 
-    @Operation(summary = "Get product by id")
+    @Operation(summary = "Get product by id", description = "Get information about a product")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the product", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ProductRequest.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid Product Id", content = @Content)
+            @ApiResponse(responseCode = "400", description = "Invalid Product Id", content = @Content),
+            @ApiResponse(responseCode = "204", description = "No Content", content = @Content)
+
 
     })
     @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
