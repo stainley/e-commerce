@@ -2,6 +2,7 @@ package com.salapp.ecommerce.productservice.controller;
 
 import com.salapp.ecommerce.api.dto.product.ProductRequest;
 import com.salapp.ecommerce.api.dto.product.ProductResponse;
+import com.salapp.ecommerce.api.exception.ProductNotFoundException;
 import com.salapp.ecommerce.api.rest.product.ProductRestController;
 import com.salapp.ecommerce.api.util.ServiceUtil;
 import com.salapp.ecommerce.productservice.services.ProductService;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -32,12 +35,17 @@ public class ProductController implements ProductRestController {
     }
 
     @Override
-    public ResponseEntity<ProductResponse> getProductById(Long id) {
+    public ResponseEntity<ProductResponse> getProductById(Long id) throws ProductNotFoundException {
         log.info("Trying to find a product with id: {}", id);
+
         Optional<ProductResponse> result = this.productService.getProductById(id);
 
-        return result.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.FOUND))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return result.map(productResponse -> ResponseEntity.status(HttpStatus.OK).body(productResponse)).orElseThrow();
+    }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> getProductsToExpire(Date expirationDate) {
+        return null;
     }
 
     @Override

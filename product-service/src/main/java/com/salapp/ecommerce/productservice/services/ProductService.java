@@ -2,17 +2,18 @@ package com.salapp.ecommerce.productservice.services;
 
 import com.salapp.ecommerce.api.dto.product.ProductRequest;
 import com.salapp.ecommerce.api.dto.product.ProductResponse;
+import com.salapp.ecommerce.api.exception.ProductNotFoundException;
 import com.salapp.ecommerce.productservice.entity.ProductEntity;
 import com.salapp.ecommerce.productservice.mapper.ProductEntityMapper;
 import com.salapp.ecommerce.productservice.mapper.ProductResponseMapper;
 import com.salapp.ecommerce.productservice.repository.IProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,6 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse createProduct(ProductRequest productRequest) {
         ProductEntity product = productEntityMapper.mapProductRequestToProductEntity(productRequest);
-        product.setCreationDate(new Date());
 
         ProductEntity productCreated = this.productRepository.save(product);
         log.info("Product created: {}", productCreated);
@@ -34,11 +34,15 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Optional<ProductResponse> getProductById(Long id) {
+    public Optional<ProductResponse> getProductById(Long id) throws ProductNotFoundException {
         log.info("Product with ID: {}", id);
         Optional<ProductEntity> result = this.productRepository.findById(id);
 
-        return result.map(productResponseMapper::mapProductEntityToProductResponse);
+        if(result.isEmpty()) {
+            throw new ProductNotFoundException("Couldn't find a product with Id: [" + id + "]");
+        } else {
+            return result.map(productResponseMapper::mapProductEntityToProductResponse);
+        }
     }
 
     @Override
@@ -48,10 +52,24 @@ public class ProductService implements IProductService {
         productToDelete.ifPresent(product -> this.productRepository.deleteById(id));
     }
 
+    @Transactional
+    @Override
+    public List<ProductResponse> getProductToExpire(Date expiration) {
+        List<ProductEntity> productsToExpire = this.productRepository.getProductsToExpire(expiration);
+
+        if (productsToExpire.size() > 0) {
+            return productResponseMapper.mapProductEntityToProductResponse(productsToExpire);
+        }
+
+        return List.of(ProductResponse.builder().build());
+    }
+
     private final ProductEntityMapper productEntityMapper = (request) -> {
         ProductEntity product = new ProductEntity();
+
         product.setName(request.getName());
         product.setDescription(request.getDescription());
+        product.setCreationDate(new Date());
         product.setPrice(request.getPrice());
         return product;
     };

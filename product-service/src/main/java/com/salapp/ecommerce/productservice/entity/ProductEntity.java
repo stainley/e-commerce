@@ -1,6 +1,5 @@
 package com.salapp.ecommerce.productservice.entity;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,5 +28,9 @@ public class ProductEntity {
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     Date creationDate;
+
+    @Column(name = "EXPIRATION_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date expirationDate;
 
 }

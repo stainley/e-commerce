@@ -2,12 +2,13 @@ package com.salapp.ecommerce.api.dto.product;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Negative;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-
+@ToString
 @Data
 @Builder
 public class ProductRequest {

@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: @profileActivation@
+  application:
+    name: Api Gateway
+  main:
+    banner-mode: off
+server:
+  port: 8080
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    sql: off
+product:
+  service: http://product:8070
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+product:
+  service: http://localhost:8070

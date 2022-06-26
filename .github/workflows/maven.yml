@@ -5,15 +5,14 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-deploy:
     runs-on: ubuntu-latest
-
+    environment: production
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -23,4 +22,26 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -Pdev -B package --file pom.xml
+      run: mvn clean -Pdev -B package --file pom.xml
+
+    #- name: Publish to Docker Hub
+      #uses: docker/build-push-action@v1
+      #with:
+        #username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        #password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        #repository: ${{secrets.DOCKER_HUB_USERNAME}}/dockerHubRepository
+        #tags: ${{  github.run_number }}
+
+    - name: ssh deploy
+      uses: appleboy/ssh-action@master
+      with:
+        KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        script: |          
+          cd eccomerce          
+          git clone --branch development git@github.com:stainley/e-commerce.git
+          cd e-commerce
+          git pull origin development                   
+          ./mvnw clean package -Pdev
+          docker-compose up -d

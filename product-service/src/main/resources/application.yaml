@@ -2,7 +2,31 @@ server:
   port: 8070
 spring:
   application:
-    name: Product Service
+    name: product
+  profiles:
+    active: @profileActivation@
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/product
+    username: postgres
+    password: mysecretpassword
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: create
+product:
+  service: http://localhost:8070
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://product_postgres:5432/product
@@ -12,3 +36,11 @@ spring:
     database: postgresql
     hibernate:
       ddl-auto: create
+  main:
+    banner-mode: off
+logging:
+  level:
+    web: error
+    sql: info
+product:
+  service: http://product:8070

@@ -23,6 +23,7 @@ public interface UserResponseMapper {
                         .firstName(entity.getFirstName())
                         .lastName(entity.getLastName())
                         .email(entity.getEmail())
+                        .gender(entity.getGender())
                         .build();
 
                 userResponses.add(userResponse);
