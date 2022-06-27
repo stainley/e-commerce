@@ -80,7 +80,7 @@ public class ApiGatewayTests {
 
         ResponseEntity<ProductResponse> result = cut.getProductById(1L);
 
-        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
-        Assertions.assertEquals("iPad", Objects.requireNonNull(result.getBody()).getName());
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode(), "Product must be created");
+        Assertions.assertEquals("iPad", Objects.requireNonNull(result.getBody()).getName(), "product should return a name with value: iPad");
     }
 }
