@@ -49,6 +49,11 @@ public class ProductController implements ProductRestController {
     }
 
     @Override
+    public ResponseEntity<ProductResponse> updateProduct(ProductRequest productRequest, Long id) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<String> deleteProduct(Long id) {
         this.productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
