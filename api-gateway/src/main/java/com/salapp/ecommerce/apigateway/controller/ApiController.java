@@ -64,6 +64,11 @@ public class ApiController implements EcommerceApi {
     }
 
     @Override
+    public ResponseEntity<ProductResponse> updateProduct(ProductRequest productRequest, Long id) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<String> deleteProduct(Long id) {
         this.restTemplate.delete(URL_PRODUCT + "/api/v1/product/" + id);
         return new ResponseEntity<>("Product deleted", HttpStatus.OK);
