@@ -16,7 +16,7 @@ public interface IProductService {
 
     Optional<ProductResponse> getProductById(Long id) throws ProductNotFoundException;
 
-    void deleteProduct(Long id);
+    void deleteProduct(Long id) throws ProductNotFoundException;
 
     List<ProductResponse> getProductToExpire(Date expiration);
 }

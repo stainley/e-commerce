@@ -38,7 +38,7 @@ public class ProductService implements IProductService {
         log.info("Product with ID: {}", id);
         Optional<ProductEntity> result = this.productRepository.findById(id);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             throw new ProductNotFoundException("Couldn't find a product with Id: [" + id + "]");
         } else {
             return result.map(productResponseMapper::mapProductEntityToProductResponse);
@@ -46,9 +46,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Long id) throws ProductNotFoundException{
         Optional<ProductEntity> productToDelete = this.productRepository.findById(id);
 
+        if (productToDelete.isEmpty()) {
+            throw new ProductNotFoundException("Product with ID: " + id + " not found");
+        }
         productToDelete.ifPresent(product -> this.productRepository.deleteById(id));
     }
 
