@@ -41,8 +41,6 @@ class ProductControllerTest {
     public void loadContext(){
         System.out.println(mockMvc.getClass().getName());
         System.out.println(productService.getClass().getName());
-        System.out.println(serviceUtil.getClass().getName());
-
     }
 
     @Test
