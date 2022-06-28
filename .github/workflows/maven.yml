@@ -39,7 +39,10 @@ jobs:
         HOST: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
         script: |          
-          cd eccomerce          
+          cd eccomerce 
+          docker stop api_gateway product user
+          docker rm api_gateway product user
+          docker rmi e-commerce_api_gateway e-commerce_user e-commerce_product
           git clone --branch development git@github.com:stainley/e-commerce.git
           cd e-commerce
           git pull origin development                   
