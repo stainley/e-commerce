@@ -55,7 +55,19 @@ public class ProductController implements ProductRestController {
 
     @Override
     public ResponseEntity<String> deleteProduct(Long id) {
-        this.productService.deleteProduct(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            this.productService.deleteProduct(id);
+        } catch (ProductNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return new ResponseEntity<>(deletedMessage(id), HttpStatus.OK);
+    }
+
+    private String deletedMessage(Long id) {
+        return """
+                {
+                    "message" : "product %s has been deleted!"
+                }
+                """.formatted(id);
     }
 }
