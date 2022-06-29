@@ -102,6 +102,19 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=rootuser
       - MONGO_INITDB_ROOT_PASSWORD=rootpass
+
+  invetorydb:
+    container_name: inventoty_db
+    image: mongo
+    ports:
+      - '27016:27017'
+    networks:
+      - e-comerce
+    volumes:
+      - data:/data
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=rootuser
+      - MONGO_INITDB_ROOT_PASSWORD=rootpass
   #mongo-express:
   #  image: mongo-express
   #  container_name: mongo_express
