@@ -46,6 +46,12 @@
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.salapp.e-commerce</groupId>
+            <artifactId>api</artifactId>
+            <version>0.0.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
