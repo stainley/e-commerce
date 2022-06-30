@@ -50,6 +50,7 @@ public class ProductController implements ProductRestController {
 
     @Override
     public ResponseEntity<ProductResponse> updateProduct(ProductRequest productRequest, Long id) {
+        // Add update product information
         return null;
     }
 
